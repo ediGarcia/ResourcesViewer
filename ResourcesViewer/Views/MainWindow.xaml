@@ -44,7 +44,7 @@
                 <ui:NumberBox
                     Grid.Column="1"
                     IsEnabled="{Binding IsMonitoring, Converter={StaticResource InverseBooleanConverter}, UpdateSourceTrigger=PropertyChanged}"
-                    Minimum="0"
+                    Minimum="1"
                     MinWidth="300"
                     Value="{Binding Interval, UpdateSourceTrigger=PropertyChanged}"/>
 
