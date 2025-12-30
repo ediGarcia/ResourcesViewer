@@ -37,6 +37,15 @@
                     Property="Background"
                     Value="{StaticResource Background}" />
                 <Setter
+                    Property="BorderBrush"
+                    Value="#EEE" />
+                <Setter
+                    Property="BorderThickness"
+                    Value="1" />
+                <Setter
+                    Property="CornerRadius"
+                    Value="5" />
+                <Setter
                     Property="Effect">
                     <Setter.Value>
                         <DropShadowEffect

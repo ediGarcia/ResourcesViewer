@@ -412,7 +412,13 @@
                         <ui:TextBox
                             Grid.Column="0"
                             PlaceholderText="Enter a process name or id."
-                            Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
+                            <ui:TextBox.InputBindings>
+                                <KeyBinding
+                                    Key="Enter"
+                                    Command="{Binding SearchCommand}" />
+                            </ui:TextBox.InputBindings>
+                        </ui:TextBox>
                         <ui:Button 
                             Grid.Column="1"
                             Command="{Binding SearchCommand}"
