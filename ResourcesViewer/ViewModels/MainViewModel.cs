@@ -131,15 +131,6 @@ public partial class MainViewModel : ObservableObject
         !IsMonitoring && SelectedIndex >= 0 && Processes.None(_ => _.Id == SearchResult[SelectedIndex].Id);
     #endregion
 
-    #region CanCloseSearchPopup
-    /// <summary>
-    /// Determines whether the search popup can be closed.
-    /// </summary>
-    /// <returns></returns>
-    private bool CanCloseSearchPopup() =>
-            IsSearchPopupOpen;
-    #endregion
-
     #region CanOpenSearchPopup
     /// <summary>
     /// Determines whether the search popup can be opened.
@@ -199,7 +190,7 @@ public partial class MainViewModel : ObservableObject
     /// <summary>
     /// Closes the search popup and clears the search results.
     /// </summary>
-    [RelayCommand(CanExecute = nameof(CanCloseSearchPopup))]
+    [RelayCommand]
     public void CloseSearchPopup()
     {
         IsSearchPopupOpen = false;
@@ -328,7 +319,7 @@ public partial class MainViewModel : ObservableObject
     {
         SaveFileDialog saveFileDialog = new()
         {
-            FileName = $"{process.ProcessName}_{process.Id}_ResourceUsage.csv",
+            FileName = $"{process.ProcessName.Replace(".", "_")}_{process.Id}_ResourceUsage.csv",
             Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*",
             Title = "Save File"
         };
@@ -351,7 +342,6 @@ public partial class MainViewModel : ObservableObject
     private void NotifyAllCommandsCanExecuteChanged()
     {
         AddProcessCommand.NotifyCanExecuteChanged();
-        CloseSearchPopupCommand.NotifyCanExecuteChanged();
         OpenSearchPopupCommand.NotifyCanExecuteChanged();
         RemoveProcessCommand.NotifyCanExecuteChanged();
         SaveProcessResultsCommand.NotifyCanExecuteChanged();
