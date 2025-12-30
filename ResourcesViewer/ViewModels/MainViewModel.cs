@@ -18,7 +18,11 @@ public partial class MainViewModel : ObservableObject
     /// <summary>
     /// Gets the error message to be displayed.
     /// </summary>
-    public string ErrorMessage { get; private set; }
+    public string ErrorMessage
+    {
+        get;
+        private set => SetProperty(ref field, value);
+    }
 
     /// <summary>
     /// Gets or sets the monitoring interval in seconds.
@@ -250,7 +254,15 @@ public partial class MainViewModel : ObservableObject
 
         try
         {
-            FileHelper.WriteAllText("aux.csv", text.ToString(), mode: FileMode.Append);
+            FileHelper.WriteAllText(path, text.ToString(), mode: FileMode.Append);
+
+            // Some system errors do not throw exceptions, so we manually check if the file was written correctly.
+            if (!FileHelper.Exists(path) || FileHelper.GetFileSize(path) == 0)
+            {
+                FileHelper.Delete(path);
+                throw new IOException("An unknown error prevented the file from being written.");
+            }
+
         }
         catch (Exception ex)
         {
@@ -339,6 +351,7 @@ public partial class MainViewModel : ObservableObject
     private void NotifyAllCommandsCanExecuteChanged()
     {
         AddProcessCommand.NotifyCanExecuteChanged();
+        CloseSearchPopupCommand.NotifyCanExecuteChanged();
         OpenSearchPopupCommand.NotifyCanExecuteChanged();
         RemoveProcessCommand.NotifyCanExecuteChanged();
         SaveProcessResultsCommand.NotifyCanExecuteChanged();
