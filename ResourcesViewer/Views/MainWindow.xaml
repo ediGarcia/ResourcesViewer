@@ -150,6 +150,7 @@
                                         Foreground="DarkRed"
                                         Margin="10, 0"
                                         Symbol="CalendarCancel16"
+                                        ToolTip="{Binding ErrorMessage, UpdateSourceTrigger=PropertyChanged}"
                                         Visibility="{Binding HasError, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"/>
 
                                     <Grid

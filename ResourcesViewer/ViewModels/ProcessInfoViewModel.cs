@@ -8,19 +8,18 @@ public class ProcessInfoViewModel : ObservableObject
     #region Properties
 
     /// <summary>
-    /// Gets the memory usage information.
+    /// Gets the error message if an error has occurred while updating the process information.
     /// </summary>
-    public ResourceUsageViewModel MemoryUsage { get; } = new();
+    public string ErrorMessage
+    {
+        get;
+        private set => SetProperty(ref field, value);
+    }
 
     /// <summary>
     /// Gets the handle count information.
     /// </summary>
     public ResourceUsageViewModel HandleCount { get; } = new();
-
-    /// <summary>
-    /// Gets the thread count information.
-    /// </summary>
-    public ResourceUsageViewModel ThreadCount { get; } = new();
 
     /// <summary>
     /// Gets a value indicating whether an error has occurred while updating the process information.
@@ -37,6 +36,11 @@ public class ProcessInfoViewModel : ObservableObject
     public int Id { get; }
 
     /// <summary>
+    /// Gets the memory usage information.
+    /// </summary>
+    public ResourceUsageViewModel MemoryUsage { get; } = new();
+
+    /// <summary>
     /// Gets the display name of the process.
     /// </summary>
     public string ProcessName { get; }
@@ -49,6 +53,11 @@ public class ProcessInfoViewModel : ObservableObject
         get;
         set => SetProperty(ref field, value);
     }
+
+    /// <summary>
+    /// Gets the thread count information.
+    /// </summary>
+    public ResourceUsageViewModel ThreadCount { get; } = new();
 
     /// <summary>
     /// Gets the timestamps of the recorded data points.
@@ -87,9 +96,10 @@ public class ProcessInfoViewModel : ObservableObject
 
             RunningTime = DateTime.Now - _process.StartTime;
         }
-        catch
+        catch(Exception ex)
         {
             HasError = true;
+            ErrorMessage = ex.Message;
         }
     }
     #endregion
