@@ -149,16 +149,6 @@ public partial class MainViewModel : ObservableObject
         !IsMonitoring;
     #endregion
 
-    #region CanSaveProcessResults
-    /// <summary>
-    /// Determines whether the results of a process can be saved to a file.
-    /// </summary>
-    /// <param name="process"></param>
-    /// <returns></returns>
-    private bool CanSaveProcessResults(ProcessInfoViewModel? process) =>
-        !IsMonitoring && process?.TimeStamps.Any() == true;
-    #endregion
-
     #region CanSearch
     /// <summary>
     /// Determines whether a search can be performed.
@@ -225,7 +215,7 @@ public partial class MainViewModel : ObservableObject
     /// Saves the results of the specified process to a CSV file.
     /// </summary>
     /// <param name="process"></param>
-    [RelayCommand(CanExecute = nameof(CanSaveProcessResults))]
+    [RelayCommand]
     private void SaveProcessResults(ProcessInfoViewModel process)
     {
         if (!GetTargetFileName(process, out string path))
@@ -241,7 +231,7 @@ public partial class MainViewModel : ObservableObject
         IReadOnlyList<long> threadCountValue = process.ThreadCount.GetValues();
 
         for (int i = 0; i < process.TimeStamps.Count; i++)
-            text.AppendLine($"{process.TimeStamps[i]:hh:mm:ss},{handleCountValue[i]},{memoryUsageValue[i]},{threadCountValue[i]}");
+            text.AppendLine($"{process.TimeStamps[i]:HH:mm:ss},{handleCountValue[i]},{memoryUsageValue[i]},{threadCountValue[i]}");
 
         try
         {
@@ -344,7 +334,6 @@ public partial class MainViewModel : ObservableObject
         AddProcessCommand.NotifyCanExecuteChanged();
         OpenSearchPopupCommand.NotifyCanExecuteChanged();
         RemoveProcessCommand.NotifyCanExecuteChanged();
-        SaveProcessResultsCommand.NotifyCanExecuteChanged();
         SearchCommand.NotifyCanExecuteChanged();
         ToggleMonitoringCommand.NotifyCanExecuteChanged();
     }
