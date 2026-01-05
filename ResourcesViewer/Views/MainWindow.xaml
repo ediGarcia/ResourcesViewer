@@ -212,11 +212,17 @@
                                             Grid.Column="0"
                                             Grid.Row="0"
                                             Text="Running time:" />
-                                        <TextBlock
+                                        <StackPanel
                                             Grid.Column="1"
                                             Grid.Row="0"
                                             Margin="5, 0"
-                                            Text="{Binding RunningTime, StringFormat='{}hh\\:mm\\:ss', UpdateSourceTrigger=PropertyChanged}" />
+                                            Orientation="Horizontal"
+                                            VerticalAlignment="Center">
+                                            <TextBlock
+                                                Text="{Binding RunningTime.TotalHours, StringFormat='{}00', UpdateSourceTrigger=PropertyChanged}" />
+                                            <TextBlock
+                                                Text="{Binding RunningTime, StringFormat='{}\\:mm\\:ss', UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
 
                                         <TextBlock
                                             Grid.Column="0"

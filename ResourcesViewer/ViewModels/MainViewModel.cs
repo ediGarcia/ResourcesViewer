@@ -231,7 +231,7 @@ public partial class MainViewModel : ObservableObject
         IReadOnlyList<long> threadCountValue = process.ThreadCount.GetValues();
 
         for (int i = 0; i < process.TimeStamps.Count; i++)
-            text.AppendLine($"{process.TimeStamps[i]:HH:mm:ss},{handleCountValue[i]},{memoryUsageValue[i]},{threadCountValue[i]}");
+            text.AppendLine($"{process.TimeStamps[i]:dd/MMM-HH:mm:ss},{handleCountValue[i]},{memoryUsageValue[i]},{threadCountValue[i]}");
 
         try
         {
